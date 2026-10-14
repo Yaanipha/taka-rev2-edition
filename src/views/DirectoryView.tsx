@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { MapPin, Search, Star, Clock, Sparkles, Navigation, Phone, ChevronRight } from 'lucide-react';
+import { MapPin, Search, Phone, Coffee, ShoppingBag, ChevronRight } from 'lucide-react';
 import { FLOORS_DATA } from '../data/mockData';
-import { FloorInfo } from '../types';
 
 interface DirectoryViewProps {
   onNavigateLounge: () => void;
@@ -25,159 +24,123 @@ export const DirectoryView: React.FC<DirectoryViewProps> = ({
   );
 
   return (
-    <div className="space-y-10 pb-16">
-      {/* Header */}
-      <div className="text-center max-w-3xl mx-auto space-y-3">
-        <div className="flex items-center justify-center gap-2 text-xs font-semibold text-[#7A1520] tracking-wider uppercase">
-          <MapPin className="w-4 h-4 text-[#7A1520]" />
-          <span>Takashimaya Department Store · 391 Orchard Road</span>
-        </div>
-        <h1 className="font-serif text-3xl sm:text-4xl font-bold text-[#201A1A]">
-          Store Directory & Floor Guide
-        </h1>
-        <p className="text-sm text-[#574141] leading-relaxed">
-          Navigate six expansive levels of curated Japanese gastronomy, luxury fashion houses, haute horlogerie salons, and The Rose VIP Lounge.
-        </p>
+    <div className="space-y-4 pb-24 max-w-[430px] mx-auto px-4">
+      {/* Title */}
+      <div className="text-center space-y-1">
+        <span className="text-[10px] uppercase font-bold text-[#7A1520] tracking-wider">
+          391 Orchard Road · Ngee Ann City
+        </span>
+        <h2 className="font-serif text-xl font-bold text-[#201A1A]">
+          Store Floor Guide
+        </h2>
       </div>
 
-      {/* Floor Level Selector Tabs */}
-      <div className="flex items-center justify-center gap-2 overflow-x-auto no-scrollbar pb-1">
+      {/* Floor Buttons */}
+      <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar -mx-4 px-4 pb-1">
         {FLOORS_DATA.map((fl) => (
           <button
             key={fl.level}
             onClick={() => setSelectedLevel(fl.level)}
-            className={`px-4 py-2.5 rounded-xl border text-xs font-bold transition-all whitespace-nowrap shrink-0 cursor-pointer flex items-center gap-2 ${
+            className={`px-3 py-1.5 rounded-xl border text-xs font-bold transition-all whitespace-nowrap shrink-0 cursor-pointer ${
               selectedLevel === fl.level
-                ? 'bg-[#7A1520] text-white border-[#7A1520] shadow-md'
-                : 'bg-white hover:bg-[#F7EDE8] text-[#574141] border-[#EEDCD4]'
+                ? 'bg-[#7A1520] text-white border-[#7A1520] shadow-xs'
+                : 'bg-white text-[#574141] border-[#EEDCD4]'
             }`}
           >
-            <span className="font-serif text-sm">{fl.level}</span>
-            <span className="text-[11px] font-sans font-normal opacity-90 hidden sm:inline">
-              {fl.englishTitle.split('&')[0]}
-            </span>
+            <span>{fl.level}</span>
           </button>
         ))}
       </div>
 
-      {/* Selected Floor Presentation Card */}
-      <div className="bg-white rounded-3xl border border-[#EEDCD4] p-6 sm:p-8 shadow-sm space-y-6">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-[#EEDCD4]">
-          <div>
-            <div className="flex items-center gap-3">
-              <span className="font-serif text-3xl sm:text-4xl font-bold text-[#7A1520]">
-                {currentFloor.level}
-              </span>
-              <div>
-                <h2 className="font-serif text-xl sm:text-2xl font-bold text-[#201A1A]">
-                  {currentFloor.englishTitle}
-                </h2>
-                <p className="text-xs text-[#8A7170]">{currentFloor.japaneseTitle}</p>
-              </div>
+      {/* Selected Floor Banner Card */}
+      <div className="bg-white rounded-2xl border border-[#EEDCD4] p-4 shadow-2xs space-y-3">
+        <div className="flex items-center justify-between pb-2 border-b border-[#EEDCD4]">
+          <div className="flex items-center gap-2">
+            <span className="font-serif text-2xl font-bold text-[#7A1520]">
+              {currentFloor.level}
+            </span>
+            <div>
+              <h3 className="font-serif text-xs font-bold text-[#201A1A]">
+                {currentFloor.englishTitle}
+              </h3>
+              <p className="text-[9px] text-[#8A7170]">{currentFloor.japaneseTitle}</p>
             </div>
           </div>
 
-          {/* Quick Shortcuts */}
-          <div className="flex items-center gap-2">
-            {currentFloor.level === 'L3' && (
-              <button
-                onClick={onNavigateLounge}
-                className="px-4 py-2 bg-[#7A1520] hover:bg-[#8E1C27] text-white text-xs font-semibold rounded-xl flex items-center gap-1.5 cursor-pointer shadow-xs"
-              >
-                <Sparkles className="w-3.5 h-3.5" />
-                <span>Reserve Rose Lounge</span>
-              </button>
-            )}
-            {currentFloor.level === 'B2' && (
-              <button
-                onClick={onNavigateDepachika}
-                className="px-4 py-2 bg-[#7A1520] hover:bg-[#8E1C27] text-white text-xs font-semibold rounded-xl flex items-center gap-1.5 cursor-pointer shadow-xs"
-              >
-                <span>Order Depachika Delicacies</span>
-              </button>
-            )}
-          </div>
+          {currentFloor.level === 'L3' && (
+            <button
+              onClick={onNavigateLounge}
+              className="px-2.5 py-1 bg-[#7A1520] text-white text-[10px] font-bold rounded-lg cursor-pointer"
+            >
+              Book Lounge
+            </button>
+          )}
+
+          {currentFloor.level === 'B2' && (
+            <button
+              onClick={onNavigateDepachika}
+              className="px-2.5 py-1 bg-[#7A1520] text-white text-[10px] font-bold rounded-lg cursor-pointer"
+            >
+              Order Food
+            </button>
+          )}
         </div>
 
-        {/* Floor Highlights Chips */}
-        <div className="flex flex-wrap items-center gap-2 text-xs">
-          <span className="text-[11px] font-bold uppercase tracking-wider text-[#8A7170] mr-2">
-            Floor Highlights:
-          </span>
-          {currentFloor.highlights.map((hl, idx) => (
+        {/* Highlights */}
+        <div className="flex flex-wrap gap-1 text-[10px]">
+          {currentFloor.highlights.slice(0, 3).map((hl, i) => (
             <span
-              key={idx}
-              className="px-3 py-1 bg-[#F7EDE8] text-[#574141] font-medium rounded-lg border border-[#EEDCD4] text-[11px]"
+              key={i}
+              className="px-2 py-0.5 bg-[#F7EDE8] text-[#574141] rounded border border-[#EEDCD4]"
             >
               {hl}
             </span>
           ))}
         </div>
 
-        {/* Search within floor */}
-        <div className="relative max-w-md">
-          <Search className="w-4 h-4 text-[#8A7170] absolute left-3.5 top-1/2 -translate-y-1/2" />
+        {/* Search */}
+        <div className="relative">
+          <Search className="w-3.5 h-3.5 text-[#8A7170] absolute left-3 top-1/2 -translate-y-1/2" />
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder={`Search boutiques on ${currentFloor.level}...`}
-            className="w-full pl-9 pr-4 py-2 bg-[#FFF8F7] border border-[#EEDCD4] rounded-xl text-xs text-[#201A1A] focus:outline-none focus:ring-2 focus:ring-[#7A1520]/20"
+            placeholder={`Search ${currentFloor.level} boutiques...`}
+            className="w-full pl-8 pr-3 py-1.5 bg-[#FFF8F7] border border-[#EEDCD4] rounded-xl text-xs text-[#201A1A] focus:outline-none focus:ring-1 focus:ring-[#7A1520]"
           />
         </div>
 
-        {/* Boutiques & Services List */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
-          {filteredStores.map((store, idx) => (
+        {/* Stores list */}
+        <div className="space-y-2 pt-1">
+          {filteredStores.map((st, i) => (
             <div
-              key={idx}
-              className="p-4 rounded-2xl bg-[#FFF8F7] border border-[#EEDCD4] hover:bg-[#F7EDE8] transition-all flex items-center justify-between"
+              key={i}
+              className="p-2.5 rounded-xl bg-[#FFF8F7] border border-[#EEDCD4] flex items-center justify-between"
             >
               <div>
-                <div className="flex items-center gap-2">
-                  <h4 className="font-serif text-sm font-bold text-[#201A1A]">
-                    {store.name}
-                  </h4>
-                  {store.isVipPartner && (
-                    <span className="px-2 py-0.5 rounded-full text-[9px] font-bold bg-[#7A1520] text-white">
-                      VIP Partner
-                    </span>
-                  )}
-                </div>
-                <p className="text-xs text-[#574141] mt-0.5">{store.category}</p>
+                <span className="text-xs font-bold text-[#201A1A] block">{st.name}</span>
+                <span className="text-[10px] text-[#574141]">{st.category}</span>
               </div>
-
-              <div className="text-right">
-                <span className="inline-block px-2.5 py-1 bg-white border border-[#EEDCD4] rounded-md text-[11px] font-mono font-semibold text-[#7A1520]">
-                  {store.location}
-                </span>
-              </div>
+              <span className="text-[10px] font-mono text-[#7A1520] bg-white px-2 py-0.5 rounded border border-[#EEDCD4]">
+                {st.location}
+              </span>
             </div>
           ))}
         </div>
       </div>
 
-      {/* Department Store Concierge Assistance Banner */}
-      <div className="p-6 bg-[#F7EDE8] rounded-3xl border border-[#EEDCD4] flex flex-col md:flex-row items-center justify-between gap-6">
-        <div className="flex items-center gap-4">
-          <div className="w-12 h-12 rounded-2xl bg-[#7A1520] text-white flex items-center justify-center shrink-0 shadow-md">
-            <Phone className="w-6 h-6" />
+      {/* Concierge Hotline */}
+      <div className="p-3.5 bg-[#F7EDE8] rounded-2xl border border-[#EEDCD4] flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <div className="w-8 h-8 rounded-full bg-[#7A1520] text-white flex items-center justify-center">
+            <Phone className="w-4 h-4" />
           </div>
           <div>
-            <h3 className="font-serif text-base font-bold text-[#201A1A]">
-              Personal Shopper & Tax Refund Inquiries
-            </h3>
-            <p className="text-xs text-[#574141] mt-0.5">
-              Customer Service Centre located at Level 3 North. Tourist GST refund and VIP parcel consolidation available.
-            </p>
+            <span className="text-xs font-bold text-[#201A1A] block">VIP Concierge Desk</span>
+            <span className="text-[10px] text-[#574141]">Level 3 North Wing</span>
           </div>
         </div>
-
-        <div className="flex items-center gap-3 shrink-0">
-          <span className="text-xs font-mono font-bold text-[#7A1520] bg-white px-3.5 py-2 rounded-xl border border-[#EEDCD4]">
-            Tel: +65 6738 1111
-          </span>
-        </div>
+        <span className="font-mono text-xs font-bold text-[#7A1520]">+65 6738 1111</span>
       </div>
     </div>
   );

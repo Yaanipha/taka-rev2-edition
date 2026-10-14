@@ -2,13 +2,11 @@ import React, { useState } from 'react';
 import {
   Search,
   ShoppingBag,
-  Sparkles,
   Check,
   Eye,
   X,
   Truck,
-  ShieldCheck,
-  Tag
+  Sparkles
 } from 'lucide-react';
 import { DepachikaProduct, TierLevel } from '../types';
 import { PRODUCTS_DATA } from '../data/mockData';
@@ -30,10 +28,10 @@ export const DepachikaView: React.FC<DepachikaViewProps> = ({
   const [addedNotice, setAddedNotice] = useState<string | null>(null);
 
   const categories = [
-    { id: 'all', label: 'All Collections' },
-    { id: 'depachika', label: 'Depachika Gourmet' },
-    { id: 'horlogerie', label: 'Haute Horlogerie' },
-    { id: 'beauty', label: 'Prestige Beauty' },
+    { id: 'all', label: 'All Items' },
+    { id: 'depachika', label: 'Depachika Food' },
+    { id: 'horlogerie', label: 'Horlogerie' },
+    { id: 'beauty', label: 'Beauty' },
     { id: 'tea', label: 'Tea & Wagashi' },
   ];
 
@@ -53,175 +51,137 @@ export const DepachikaView: React.FC<DepachikaViewProps> = ({
   };
 
   return (
-    <div className="space-y-10 pb-16">
-      {/* Depachika Header Banner */}
-      <section className="relative overflow-hidden rounded-3xl border border-[#EEDCD4] bg-[#F7EDE8]">
-        <div className="grid grid-cols-1 lg:grid-cols-12 min-h-[360px]">
-          <div className="lg:col-span-7 p-8 sm:p-12 flex flex-col justify-between z-10">
-            <div className="space-y-3">
-              <div className="flex items-center gap-2 text-xs font-semibold text-[#7A1520] tracking-wider uppercase">
-                <span className="w-2 h-2 rounded-full bg-[#7A1520]" />
-                <span>Basement 2 Food Hall & Prestige Salons</span>
-              </div>
-              <h1 className="font-serif text-3xl sm:text-4xl font-bold text-[#201A1A]">
-                Depachika & Curated Boutiques
-              </h1>
-              <p className="text-sm text-[#574141] leading-relaxed max-w-xl">
-                Experience the culinary theater and craftsmanship of Japan's legendary basement food halls. Rare Shizuoka Crown Melons, BMS 11 Miyazaki Wagyu, artisanal Kyoto confectionery, and Swiss haute horlogerie.
-              </p>
-            </div>
-
-            <div className="mt-6 flex items-center gap-4 text-xs text-[#574141]">
-              <div className="flex items-center gap-1.5 bg-white/80 px-3 py-1.5 rounded-lg border border-[#EEDCD4]">
-                <Truck className="w-3.5 h-3.5 text-[#7A1520]" />
-                <span>Chilled Same-Day Islandwide Delivery</span>
-              </div>
-              <button
-                onClick={onOpenCart}
-                className="text-[#7A1520] font-semibold hover:underline flex items-center gap-1"
-              >
-                <span>View Concierge Bag</span>
-              </button>
-            </div>
-          </div>
-
-          <div className="lg:col-span-5 relative min-h-[240px] lg:min-h-full">
-            <img
-              src="/src/assets/images/depachika_gourmet_selection_1791943420127.jpg"
-              alt="Japanese depachika delicacies: Crown melon, wagashi, and matcha ceremony"
-              referrerPolicy="no-referrer"
-              className="absolute inset-0 w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#201A1A]/80 via-transparent to-transparent lg:bg-gradient-to-r lg:from-[#F7EDE8] lg:via-transparent lg:to-transparent" />
-          </div>
-        </div>
-      </section>
-
-      {/* Filter and Search Bar */}
-      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
-        {/* Category Buttons */}
-        <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-1 sm:pb-0">
-          {categories.map((cat) => (
-            <button
-              key={cat.id}
-              onClick={() => setSelectedCategory(cat.id)}
-              className={`px-4 py-2 text-xs font-semibold rounded-xl border transition-all whitespace-nowrap shrink-0 cursor-pointer ${
-                selectedCategory === cat.id
-                  ? 'bg-[#7A1520] text-white border-[#7A1520] shadow-sm'
-                  : 'bg-[#FFF8F7] hover:bg-[#F7EDE8] text-[#574141] border-[#EEDCD4]'
-              }`}
-            >
-              {cat.label}
-            </button>
-          ))}
-        </div>
-
-        {/* Search */}
-        <div className="relative min-w-[260px]">
-          <Search className="w-4 h-4 text-[#8A7170] absolute left-3.5 top-1/2 -translate-y-1/2" />
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search melons, wagyu, watches..."
-            className="w-full pl-9 pr-4 py-2 bg-white border border-[#EEDCD4] rounded-xl text-xs text-[#201A1A] focus:outline-none focus:ring-2 focus:ring-[#7A1520]/20"
-          />
-        </div>
+    <div className="space-y-4 pb-24 max-w-[430px] mx-auto px-4">
+      {/* Search Input */}
+      <div className="relative">
+        <Search className="w-4 h-4 text-[#8A7170] absolute left-3.5 top-1/2 -translate-y-1/2" />
+        <input
+          type="text"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          placeholder="Search melons, Wagyu, Swiss timepieces..."
+          className="w-full pl-9 pr-4 py-2.5 bg-white border border-[#EEDCD4] rounded-2xl text-xs text-[#201A1A] shadow-2xs focus:outline-none focus:ring-2 focus:ring-[#7A1520]/20"
+        />
       </div>
 
-      {/* Product Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {/* Category Pills Scroller */}
+      <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar -mx-4 px-4 pb-1">
+        {categories.map((cat) => (
+          <button
+            key={cat.id}
+            onClick={() => setSelectedCategory(cat.id)}
+            className={`px-3.5 py-1.5 text-xs font-semibold rounded-full border transition-all whitespace-nowrap shrink-0 cursor-pointer ${
+              selectedCategory === cat.id
+                ? 'bg-[#7A1520] text-white border-[#7A1520] shadow-xs'
+                : 'bg-white text-[#574141] border-[#EEDCD4]'
+            }`}
+          >
+            {cat.label}
+          </button>
+        ))}
+      </div>
+
+      {/* Air Flown Notice */}
+      <div className="p-3 bg-[#F7EDE8] rounded-xl border border-[#EEDCD4] flex items-center justify-between text-[11px] text-[#574141]">
+        <div className="flex items-center gap-2">
+          <Truck className="w-4 h-4 text-[#7A1520]" />
+          <span>Same-day chilled island-wide delivery</span>
+        </div>
+        <button onClick={onOpenCart} className="font-bold text-[#7A1520] underline">
+          Bag
+        </button>
+      </div>
+
+      {/* Product List */}
+      <div className="space-y-3">
         {filteredProducts.map((product) => {
           const isAdded = addedNotice === product.id;
 
           return (
             <div
               key={product.id}
-              className="group bg-white rounded-2xl border border-[#EEDCD4] overflow-hidden flex flex-col justify-between hover:shadow-lg transition-all"
+              className="bg-white rounded-2xl border border-[#EEDCD4] p-3 shadow-2xs flex gap-3 overflow-hidden active:bg-[#FDF9F6] transition-colors"
             >
-              <div>
-                {/* Image Showcase */}
-                <div className="relative aspect-[4/3] overflow-hidden bg-[#F7EDE8]">
-                  <img
-                    src={product.image}
-                    alt={product.name}
-                    referrerPolicy="no-referrer"
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                  {product.tag && (
-                    <span className="absolute top-3 left-3 bg-[#7A1520] text-white text-[10px] font-bold px-2.5 py-1 rounded-md shadow-xs">
-                      {product.tag}
-                    </span>
-                  )}
-                  <button
-                    onClick={() => setQuickViewProduct(product)}
-                    className="absolute top-3 right-3 p-2 bg-white/90 hover:bg-white text-[#201A1A] rounded-lg shadow-sm transition-opacity opacity-0 group-hover:opacity-100 cursor-pointer"
-                    title="Quick View"
-                    aria-label={`Quick view ${product.name}`}
-                  >
-                    <Eye className="w-4 h-4" />
-                  </button>
-                </div>
-
-                {/* Details */}
-                <div className="p-5 space-y-2">
-                  <div className="flex items-center justify-between text-[11px] text-[#8A7170]">
-                    <span>{product.floor}</span>
-                    <span>{product.origin.split(',')[0]}</span>
-                  </div>
-
-                  <h3 className="font-serif text-base font-bold text-[#201A1A] group-hover:text-[#7A1520] transition-colors leading-snug">
-                    {product.name}
-                  </h3>
-                  <p className="text-xs text-[#8A7170] font-sans -mt-1">
-                    {product.japaneseName}
-                  </p>
-
-                  <p className="text-xs text-[#574141] line-clamp-2 leading-relaxed pt-1">
-                    {product.description}
-                  </p>
-                </div>
+              {/* Product Thumbnail */}
+              <div
+                className="relative w-24 h-24 rounded-xl overflow-hidden bg-[#F7EDE8] shrink-0 cursor-pointer"
+                onClick={() => setQuickViewProduct(product)}
+              >
+                <img
+                  src={product.image}
+                  alt={product.name}
+                  referrerPolicy="no-referrer"
+                  className="w-full h-full object-cover"
+                />
+                {product.tag && (
+                  <span className="absolute top-1 left-1 bg-[#7A1520] text-white text-[8px] font-bold px-1.5 py-0.5 rounded">
+                    {product.tag.split(' ')[0]}
+                  </span>
+                )}
               </div>
 
-              {/* Price & Action Row */}
-              <div className="p-5 pt-0 border-t border-[#F7EDE8] flex items-center justify-between mt-2">
+              {/* Product Details */}
+              <div className="flex-1 min-w-0 flex flex-col justify-between">
                 <div>
-                  <span className="text-[10px] uppercase text-[#8A7170] block">Price</span>
-                  <span className="font-serif text-base font-bold text-[#7A1520] tabular-nums">
-                    S${product.price.toLocaleString(undefined, { minimumFractionDigits: 2 })}
-                  </span>
+                  <div className="flex items-start justify-between gap-1">
+                    <span className="text-[9px] font-semibold text-[#8A7170] uppercase">
+                      {product.floor}
+                    </span>
+                    <button
+                      onClick={() => setQuickViewProduct(product)}
+                      className="text-[#8A7170] hover:text-[#7A1520] p-0.5"
+                    >
+                      <Eye className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
+
+                  <h3
+                    onClick={() => setQuickViewProduct(product)}
+                    className="font-serif text-xs font-bold text-[#201A1A] line-clamp-1 cursor-pointer hover:text-[#7A1520]"
+                  >
+                    {product.name}
+                  </h3>
+                  <p className="text-[10px] text-[#8A7170] line-clamp-1">{product.japaneseName}</p>
                 </div>
 
-                <button
-                  onClick={() => handleAddWithFeedback(product)}
-                  className={`px-4 py-2 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-all cursor-pointer ${
-                    isAdded
-                      ? 'bg-emerald-700 text-white shadow-xs'
-                      : 'bg-[#7A1520] hover:bg-[#8E1C27] text-white shadow-xs'
-                  }`}
-                >
-                  {isAdded ? (
-                    <>
-                      <Check className="w-3.5 h-3.5" />
-                      <span>Added</span>
-                    </>
-                  ) : (
-                    <>
-                      <ShoppingBag className="w-3.5 h-3.5" />
-                      <span>Add to Bag</span>
-                    </>
-                  )}
-                </button>
+                <div className="flex items-center justify-between pt-1">
+                  <span className="font-serif text-sm font-bold text-[#7A1520] tabular-nums">
+                    S${product.price.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                  </span>
+
+                  <button
+                    onClick={() => handleAddWithFeedback(product)}
+                    className={`px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1 transition-all cursor-pointer ${
+                      isAdded
+                        ? 'bg-emerald-700 text-white shadow-xs'
+                        : 'bg-[#7A1520] text-white shadow-xs'
+                    }`}
+                  >
+                    {isAdded ? (
+                      <>
+                        <Check className="w-3 h-3" />
+                        <span>Added</span>
+                      </>
+                    ) : (
+                      <>
+                        <ShoppingBag className="w-3 h-3" />
+                        <span>Add</span>
+                      </>
+                    )}
+                  </button>
+                </div>
               </div>
             </div>
           );
         })}
       </div>
 
-      {/* Quick View Modal */}
+      {/* Mobile Bottom Sheet Quick View */}
       {quickViewProduct && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#201A1A]/60 backdrop-blur-xs animate-in fade-in duration-200">
-          <div className="relative w-full max-w-xl bg-white rounded-3xl border border-[#EEDCD4] overflow-hidden shadow-2xl flex flex-col max-h-[90vh]">
+        <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/60 backdrop-blur-xs animate-in fade-in duration-200">
+          <div className="w-full max-w-[430px] bg-white rounded-t-3xl border-t border-[#EEDCD4] shadow-2xl overflow-hidden flex flex-col max-h-[85vh] animate-in slide-in-from-bottom duration-300">
+            <div className="w-10 h-1 bg-[#DEBFBE] rounded-full mx-auto my-2.5" />
+
             <div className="relative aspect-[16/9] bg-[#F7EDE8]">
               <img
                 src={quickViewProduct.image}
@@ -231,41 +191,40 @@ export const DepachikaView: React.FC<DepachikaViewProps> = ({
               />
               <button
                 onClick={() => setQuickViewProduct(null)}
-                className="absolute top-4 right-4 p-2 rounded-full bg-white/90 hover:bg-white text-[#201A1A] shadow-md transition-colors cursor-pointer"
-                aria-label="Close dialog"
+                className="absolute top-3 right-3 p-1.5 rounded-full bg-white/90 text-[#201A1A] shadow-md cursor-pointer"
               >
                 <X className="w-4 h-4" />
               </button>
             </div>
 
-            <div className="p-6 overflow-y-auto space-y-4">
+            <div className="p-5 overflow-y-auto space-y-3">
               <div>
-                <span className="text-xs font-bold uppercase text-[#7A1520]">
+                <span className="text-[10px] font-bold uppercase text-[#7A1520]">
                   {quickViewProduct.floor} · {quickViewProduct.origin}
                 </span>
-                <h3 className="font-serif text-2xl font-bold text-[#201A1A] mt-0.5">
+                <h3 className="font-serif text-lg font-bold text-[#201A1A]">
                   {quickViewProduct.name}
                 </h3>
-                <p className="text-sm text-[#8A7170]">{quickViewProduct.japaneseName}</p>
+                <p className="text-xs text-[#8A7170]">{quickViewProduct.japaneseName}</p>
               </div>
 
-              <p className="text-sm text-[#574141] leading-relaxed">
+              <p className="text-xs text-[#574141] leading-relaxed">
                 {quickViewProduct.description}
               </p>
 
               {quickViewProduct.spec && (
-                <div className="p-3.5 bg-[#F7EDE8] rounded-xl border border-[#EEDCD4] text-xs text-[#201A1A] space-y-1">
-                  <span className="font-bold uppercase tracking-wider text-[#8A7170] text-[10px]">
-                    Curator Specifications & Lineage:
-                  </span>
-                  <p>{quickViewProduct.spec}</p>
+                <div className="p-3 bg-[#F7EDE8] rounded-xl border border-[#EEDCD4] text-[11px] text-[#201A1A]">
+                  <strong className="block text-[9px] uppercase tracking-wider text-[#8A7170]">
+                    Specification
+                  </strong>
+                  <span>{quickViewProduct.spec}</span>
                 </div>
               )}
 
-              <div className="flex items-center justify-between pt-4 border-t border-[#EEDCD4]">
+              <div className="flex items-center justify-between pt-3 border-t border-[#EEDCD4]">
                 <div>
-                  <span className="text-xs text-[#8A7170] block">Specialist Price</span>
-                  <span className="font-serif text-2xl font-bold text-[#7A1520] tabular-nums">
+                  <span className="text-[10px] text-[#8A7170] block">Specialist Price</span>
+                  <span className="font-serif text-lg font-bold text-[#7A1520] tabular-nums">
                     S${quickViewProduct.price.toLocaleString(undefined, { minimumFractionDigits: 2 })}
                   </span>
                 </div>
@@ -275,10 +234,10 @@ export const DepachikaView: React.FC<DepachikaViewProps> = ({
                     handleAddWithFeedback(quickViewProduct);
                     setQuickViewProduct(null);
                   }}
-                  className="px-6 py-2.5 bg-[#7A1520] hover:bg-[#8E1C27] text-white text-xs font-semibold rounded-xl shadow-md cursor-pointer flex items-center gap-2"
+                  className="px-5 py-2.5 bg-[#7A1520] text-white text-xs font-semibold rounded-xl shadow-md cursor-pointer flex items-center gap-1.5"
                 >
                   <ShoppingBag className="w-4 h-4" />
-                  <span>Add to Concierge Bag</span>
+                  <span>Add to Bag</span>
                 </button>
               </div>
             </div>
