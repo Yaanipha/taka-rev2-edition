@@ -1,0 +1,6 @@
+{
+  "name": "Takashimaya Prestige - Ginza Ngee Ann Elegance",
+  "description": "Prestige VIP membership, Omotenashi concierge, luxury depachika food hall, and lounge reservations at Ngee Ann City Orchard Road.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
